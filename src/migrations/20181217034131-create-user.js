@@ -20,6 +20,21 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      phone: {
+        type: Sequelize.STRING
+      },
+      recoverCode: {
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+      },
+      twoFactorSecret: {
+        type: Sequelize.STRING
+      },
+      twoFactorConfirmation: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

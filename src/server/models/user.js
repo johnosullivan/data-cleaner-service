@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define('user', {
+  const User = sequelize.define('user', {
     id: {
       type: DataTypes.UUID
     },
@@ -13,6 +13,21 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING
     },
+    phone: {
+      type: DataTypes.STRING
+    },
+    backupCode: {
+      type: DataTypes.STRING
+    },
+    password: {
+      type: DataTypes.STRING
+    },
+    twoFactorSecret: {
+      type: DataTypes.STRING
+    },
+    twoFactorConfirmation: {
+      type: DataTypes.BOOLEAN
+    },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -20,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     
   });
-  user.associate = function(models) {
+  User.associate = function(models) {
     // associations can be defined here
   };
-  return user;
+  return User;
 };
