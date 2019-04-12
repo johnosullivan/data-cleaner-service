@@ -21,27 +21,20 @@ module.exports = {
     shutdown
 }*/
 
-parseFunction = function (funcStr) {
-    const funcReg = /function *\(([^()]*)\)[ \n\t]*{(.*)}/gmi;
-    const match = funcReg.exec(funcStr.replace(/\n/g, ' '));
-    if(match) { return new Function(match[1].split(','), match[2]); }
-    return null;
-};
-
 let data = {
-    'temp': '1,2,3,2,1,5,3,2,5,4,3,2,3,5,3,2,3,4,5,3,3'
+    'temperature': '150.75'
 }
 
-clean = (rawData) => {
-    return rawData.replace(/[^\x20-\x7E]/gmi, '').trim();
+clean = (rawData) => { 
+    return rawData.replace(/[^\x20-\x7E]/gmi, '').trim(); 
 };
 
 const template = [
     {
-        'keyValue': 'temp',
-        'mapKey': 'temperature',
+        'keyValue': 'temperature',
         'inputType': 'string',
-        'ouputType': 'string',
+        'ouputType': 'float',
+        'operators': [ ], 
         'modifier' : clean(`
             function(rawValue) { 
                 return rawValue;
@@ -50,12 +43,22 @@ const template = [
     }
 ];
 
+parseFunction = (funcStr) => {
+    const funcReg = /function *\(([^()]*)\)[ \n\t]*{(.*)}/gmi;
+    const match = funcReg.exec(funcStr.replace(/\n/g, ' '));
+    if(match) { return new Function(match[1].split(','), match[2]); }
+    return null;
+};
+
 processValue = (rawValue, inputType, ouputType) => {
     let value = 0;
     try {
         switch (ouputType) {
             case 'int':
                 value = parseInt(rawValue);
+                break;
+            case 'float':
+                value = parseFloat(rawValue);
                 break;
             case 'string':
                 value = String(rawValue);
@@ -103,9 +106,7 @@ processRequest = (template, rawData) => {
     return data;
 };
 
-const x = processRequest(template,data);
-
-console.log(x);
+console.log(processRequest(template,data));
 
 /*
 const modifierStr = `
